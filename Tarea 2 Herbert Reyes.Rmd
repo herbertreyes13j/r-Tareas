@@ -1,0 +1,137 @@
+Funciones en R
+
+En R las funciones realizan diversos procedimientos, en donde se convierten las entradas en resultados.
+Las partes de una funcion de R son:
+
+1. Entradas o argumentos: Sirven para ingresar informacion necesaria para realizar el procedimiento de la 
+funcion. Los argumentos son opcionales, por lo que pueden estar vacios y a la espera que el usuario 
+ingrese valores o pueda tener valores por defecto. 
+
+2. Cuerpo: esta formado por un conjunto de instrucciones que transforman las entradas en las salidas 
+deseadas. Si el cuerpo de la funcion esta formado por varias instrucciones deben ir entre llaves. 
+
+3. Salida: Son los resultados de la funcion. Toda funcion debe tener al menos un resultado.  
+
+La estructura general de una funcion en R es:
+
+```{r}
+
+nombre_de_funcion <- function(par1, par2, ...) {
+  cuerpo
+  cuerpo
+  cuerpo
+  cuerpo
+  return(resultado)
+}
+
+```
+
+Ejemplo de una funcion:
+
+```{r}
+
+coseno <- function(w = 1, min = -2 * pi, max = 2 * pi) {
+    x <- seq(-2 * pi, 2 * pi, length = 200)
+    plot(x, cos(w * x), type = "l")
+}
+
+```
+
+Llamada a la funcion 
+
+```{r}
+coseno(w = 8, min = -9 * pi)
+
+```
+
+-- Argumentos
+
+Los argumentos de una funcion son una serie de valores que pasan a la funcion, de modo que ciertas variables dentro de estas posean diferentes valores en cada llamada a la funcion. 
+
+```{r}
+nombre <- function(argumentos) {
+  operaciones
+}
+```
+
+-- Argumentos por valor
+
+Es una funcion que envia un objeto, modificando dentro el objeto pero no cambia por fuera. 
+
+```{r}
+matriz <- matrix(data=1:20, nrow=4, ncol=5, byrow=FALSE)
+
+matrizf<-function(parametro matriz){
+  
+  print(matriz)
+}
+
+matrizf(matriz)
+```
+
+FAMILIA APPLY
+
+Es usada para aplicar una funcion a cada elemento de una estructura de datos. Es usada para aplicar funciones en matrices, data frames, arrays y listas. 
+
+-- lapply
+
+Es un caso especial de apply(), usado para aplicar funciones a todos los elementos de una lista. La l de su nombre se refiere precisamente a lista, siempre devolvera una lista como resultado. 
+
+La estructura de la funcion es:
+
+```{r}
+lapply(X, FUN)
+```
+
+Donde:
+X es una lista o un objeto coercinable a una lista
+FUN es la funcion a aplicar. 
+
+Ejemplo:
+
+```{r}
+mi_vector <- 6:12
+
+resultado <- NULL
+
+resultado <- lapply(mi_vector, sqrt)
+
+resultado
+```
+
+Con este ejemplo, podemos hacer las iteraciones de un for, utilizando la funcion sqrt para ir sacando los valores de raiz cuadrada de cada uno de los elementos del vector.
+
+
+Sapply
+
+Aplica a una funcion a un vectoro o lista y devuelve un vector o una matriz. La funcion tiene la siguiente estructura:
+
+```{r}
+sapply(X,   # Vector, lista o expresion 
+       FUN, # Funcion a aplicar
+       ..., # Argumentos adicionales 
+       simplify = TRUE,  # Si es falso retorna una lista. 
+       USE.NAMES = TRUE) # Verdadero si X es un caracter. 
+```
+
+Ejemplo
+
+```{r}
+sapply(c(3, 5, 7), exp)
+
+Y como salida muestra:
+
+20.08554 148.41316 1096.63316
+  
+
+```
+
+Vapply
+
+Devuelve un vector con la longitud que tiene cada una de las listas introducidas como parametro.
+
+```{r}
+x <- list(A = 1, B = 1:3, C = 1:7)
+vapply(x, FUN = length, FUN.VALUE = 0L)
+```
+
