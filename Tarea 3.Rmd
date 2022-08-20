@@ -1,0 +1,58 @@
+---
+title: "R Notebook"
+name: "Hebert Rafael Reyes Portillo"
+carnet: "999006801"
+output: html_notebook
+---
+#Cargar un archivo CSV
+
+```{r}
+library(tidyverse)
+primary_results_dataset <- read_csv("primary_results.csv",show_col_types = FALSE)
+print(primary_results_dataset)
+```
+#1 Filtrar todos los votos del estado de Florida
+
+```{r}
+filter(primary_results_dataset,state=="Florida")
+```
+
+#2 Utilizar los operadores logicos segun:
+
+#2.1 Filtrar votos para los candidatos Hilary Clinton o Donald Trump
+
+```{r}
+filter(primary_results_dataset,candidate=="Hillary Clinton" | candidate=="Donald Trump")
+```
+
+#2.2 Filtrar votos para el partido Demócrata y el condado Shelby
+
+```{r}
+filter(primary_results_dataset,party=="Democrat" & county=="Shelby")
+```
+
+#2.3 Filtrar votos para el estado de Alabama y que la cantidad de votos sea mayor a 15000. 
+
+```{r}
+filter(primary_results_dataset, state=="Alabama" & votes > 15000)
+```
+
+#3 Utilice la función select y arrange para el siguiente filtrado:
+
+#3.1 Filtrar votos para el estado de Texas y el condado Denton, seleccionando únicamente las columnas party, candidate, votes, luego ordene de forma descendente por la columna votes.
+
+```{r}
+arrange(select(filter(primary_results_dataset, state=="Texas" & county == "Denton"), party, candidate, votes), desc(votes))
+```
+
+#4 Utilice el verbo mutate y arrange para el siguiente filtrado:
+
+#4.1 Filtrar por el partido Republicano, que el candidato sea Ted Cruz en el estado de Alaska, luego agregue una columna que se llame vote_count que sea la división de
+#votes por fraction_votes (votes/fraction_votes), finalmente ordene de forma
+#descendente por vote_count.
+
+```{r}
+arrange(mutate(filter(primary_results_dataset,   candidate=="Ted Cruz" & party == "Republican" & state=="Alaska"), vote_count=votes/fraction_votes),desc(vote_count))
+```
+
+
